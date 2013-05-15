@@ -67,11 +67,84 @@ Instead of..
 4- This is not a required thing, but If you find something that just doesn't make sense to "translate" and you can make it better, then do it.  That's the case of the code used to consume iTunes Web services. I wasn't going to simply translate line by line. 
 
 //Obj-C
++(NSMutableArray*)generateData
+{
+    NSMutableDictionary* mediaLookup = [[NSMutableDictionary alloc]init];
+    NSMutableArray* netFlixData = [[NSMutableArray alloc]init];
+    
+    NSString* rootUrl = @"https://itunes.apple.com/search?term=%@&media=movie&entity=movie&limit=600&attribute=releaseYearTerm";
+    
+    NSArray* keys = @[@"2012", @"2013"];
+    
+    for(NSString* key in keys)
+    {
+        NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:rootUrl, key]];
+        
+        NSData* data = [NSData dataWithContentsOfURL:url];
+        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+        NSArray* results = [json valueForKey:@"results"];
+        
+        if(results != nil)
+        {
+            for(NSDictionary* mediaInfo in results)
+            {
+                NSString* genre = [NSString stringWithFormat:@"%@", [mediaInfo valueForKey:@"primaryGenreName"]];
+                
+                NSString* url = [mediaInfo valueForKey:@"artworkUrl100"];
+                
+                MediaItem* media = [[MediaItem alloc]init];
+                media.title = [mediaInfo valueForKey:@"trackName"];
+                media.imgUrl = [NSURL URLWithString:url];
+                
+                MediaData* nfd = [mediaLookup valueForKey:genre];
+                if(nfd == nil)
+                {
+                    nfd = [[MediaData alloc]init];
+                    nfd.genre = genre;
+                    nfd.media = [[NSMutableArray alloc]init];
+                    [mediaLookup setValue:nfd forKey:genre];
+                    [netFlixData addObject:nfd];
+                }
+                
+                [nfd.media addObject:media];
+            }
+            
+        }
+    }
+    
+    
+    return netFlixData;
+    
+    
 
 
 
 //C#
 
+async Task<IList<NetflixMedia>> GetData ()
+		{
+			var movies = new List<NetflixMedia> ();
+			var url = "https://itunes.apple.com/search?term={0}&media=movie&entity=movie&limit=600&attribute=releaseYearTerm";
+
+			var client = new HttpClient ();
+
+			var response = await client.GetAsync (string.Format (url, "2013"));
+			var stringData = await response.Content.ReadAsStringAsync ();
+			var json = JsonObject.Parse (stringData);
+
+			var results = json["results"];
+
+			foreach(JsonValue movie in results)
+			{
+				movies.Add (new NetflixMedia(){
+					Title = movie["trackName"],
+					ImageUrl = movie["artworkUrl100"],
+					Genre = movie["primaryGenreName"],
+				});
+
+			}
+			return movies;
+		}
 
 
 ![GridView](Screenshots/6332.IMG_0250.PNG)
