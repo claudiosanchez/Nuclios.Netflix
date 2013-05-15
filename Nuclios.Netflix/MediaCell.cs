@@ -24,13 +24,14 @@ namespace Nuclios.Netflix
 
 		public NetflixData Data { get; set; }
 
-		public MediaCell ()
+		public MediaCell (string identifier): base(identifier)
 		{
+			Init ();
+		}
 
-			//SetValueForKey (new NSString("MEDIA_CELL"), new NSString ("ReuseIdentifier")); 
-			//SetValueForKey (new NSString("MEDIA_CELL"), "ReuseIdentifier");
-			SetValueForUndefinedKey (new NSString("MEDIA_CELL"), "ReuseIdentifier");
 
+		private void Init()
+		{
 			_gridView = new IGGridView ();
 			_gridView.AllowHorizontalBounce = true;
 			_gridView.AlwaysBounceVertical = false; 

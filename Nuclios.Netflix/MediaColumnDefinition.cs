@@ -32,7 +32,7 @@ namespace Nuclios.Netflix
 			MediaCell cell = (gridView.DequeueReusableCell ("MEDIA_CELL")as MediaCell);
 
 			if (cell == null)
-				cell = new MediaCell ();
+				cell = new MediaCell ("MEDIA_CELL");
 
 			cell.Data = data as NetflixData;
 
