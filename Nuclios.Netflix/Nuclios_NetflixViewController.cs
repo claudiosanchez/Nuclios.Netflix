@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.Json;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Nuclios.Netflix
 {
@@ -53,23 +54,30 @@ namespace Nuclios.Netflix
 			_gridView.BackgroundColor = UIColor.Black;
 
 			_ds = new IGGridViewDataSourceHelper ();
-			_ds.AutoGenerateColumns = true;
+			_ds.AutoGenerateColumns = false;
 
-			//var column = new IGGridViewImageColumnDefinition("ImageUrl", IGGridViewImageColumnDefinitionPropertyType.IGGridViewImageColumnDefinitionPropertyTypeStringUrl);
+			var column = new MediaColumnDefinition("Media");
 
-			//_ds.ColumnDefinitions.Add (column);
+			_ds.ColumnDefinitions.Add (column);
 
-			//_ds.GroupingKey = new NSString("Title");
+			_ds.GroupingKey = new NSString("Category");
 
 			var media = await GetData ();
 
-			var dummyMovie = new NetflixMedia () {
-				Title="Dummy", 
-				ImageUrl ="http://a1.mzstatic.com/us/r1000/120/Video/v4/26/aa/f9/26aaf987-387d-4284-5c53-cf5ffa700b07/GDM1000651.100x100-75.jpg"
-			};
-		//var one = media [0] as NetflixMedia;
+			var array = new NSMutableArray ();
 
-			_ds.Data = media;
+			var results = media
+				.GroupBy (m=> m.Genre, 
+				          (key, g) => new {Genre = key, Media = g.ToList ()});
+
+			foreach(var item in results)
+			{
+				array.Add (new NetflixData { Category = item.Genre, Media = item.Media.ToArray() });
+			}
+
+			var realData = NSArray.FromArray<NSObject> (array);
+
+			_ds.Data = realData;
 
 	        _gridView.WeakDataSource = _ds;
 			
@@ -82,9 +90,9 @@ namespace Nuclios.Netflix
 			return true;
 		}
 
-		async Task<NSObject[]> GetData ()
+		async Task<IList<NetflixMedia>> GetData ()
 		{
-			var movies = new List<NSObject> ();
+			var movies = new List<NetflixMedia> ();
 			var url = "https://itunes.apple.com/search?term={0}&media=movie&entity=movie&limit=600&attribute=releaseYearTerm";
 			var client = new HttpClient ();
 
@@ -103,10 +111,11 @@ namespace Nuclios.Netflix
 				movies.Add (new NetflixMedia(){
 					Title = movie["trackName"],
 					ImageUrl = movie["artworkUrl100"],
+					Genre = movie["primaryGenreName"],
 				});
 
 			}
-			return movies.ToArray();
+			return movies;
 		}
 
 	}

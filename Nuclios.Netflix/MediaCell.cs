@@ -28,8 +28,6 @@ namespace Nuclios.Netflix
 		{
 		}
 
-
-
 		public MediaCell ()
 		{
 			_gridView = new IGGridView ();

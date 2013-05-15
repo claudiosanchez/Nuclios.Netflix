@@ -27,6 +27,12 @@ namespace Nuclios.Netflix
 			get;
 			set;
 		}
+
+		public string Genre {
+			get;
+			set;
+		}
+	
 	}
 	
 }
