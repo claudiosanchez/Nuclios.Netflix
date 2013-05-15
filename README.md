@@ -64,7 +64,13 @@ Instead of..
 			Init ();
 		}
 
-4- This is not a required thing, but If you find that it just doesn't make sense to re-rewrite:
+4- This is not a required thing, but If you find something that just doesn't make sense to "translate" and you can make it better, then do it.  That's the case of the code used to consume iTunes Web services. I wasn't going to simply translate line by line. 
+
+//Obj-C
+
+
+
+//C#
 
 
 
