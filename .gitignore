@@ -1,2 +1,8 @@
+bin
+obj
+*.pidb
+*.suo
 *.exe
 *.dll
+*.mdb
+.DS_Store

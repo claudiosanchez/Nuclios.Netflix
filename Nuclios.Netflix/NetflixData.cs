@@ -19,8 +19,12 @@ namespace Nuclios.Netflix
 
 	public class NetflixData: NSObject
 	{
-		public string Category;
-		public NSObject[] Media;
+		[Export("Category")]
+		public string Category { get; set; }
+
+		[Export("Media")]
+		public NSObject[] Media { get; set;}
+
 		public float ScrollPosition;
 	}
 }

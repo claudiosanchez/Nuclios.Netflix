@@ -29,7 +29,11 @@ namespace Nuclios.Netflix
 		                                           IGGridViewDataSourceHelper dataSource)
 		{
 			var data = dataSource.ResolveDataObjectForRow (path);
-			MediaCell cell = (gridView.DequeueReusableCell ("MEDIA_CELL")as MediaCell) ?? new MediaCell ("MEDIA_CELL");
+			MediaCell cell = (gridView.DequeueReusableCell ("MEDIA_CELL")as MediaCell);
+
+			if (cell == null)
+				cell = new MediaCell ();
+
 			cell.Data = data as NetflixData;
 
 			return cell;

@@ -18,16 +18,18 @@ namespace Nuclios.Netflix
 {
 	public class NetflixMedia: NSObject
 	{
+		[Export("ImageUrl")]
 		public string ImageUrl {
 			get;
 			set;
 		}
 
+		[Export("Title")]
 		public string Title {
 			get;
 			set;
 		}
-
+		[Export("Genre")]
 		public string Genre {
 			get;
 			set;
