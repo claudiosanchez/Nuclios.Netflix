@@ -36,7 +36,6 @@ namespace Nuclios.Netflix
 			
 			// Release any cached data, images, etc that aren't in use.
 		}
-
 	
 		public override async void ViewDidLoad ()
 		{
@@ -60,24 +59,16 @@ namespace Nuclios.Netflix
 
 			_ds.ColumnDefinitions.Add (column);
 
-			_ds.GroupingKey = new NSString("Category");
+			//_ds.GroupingKey = "Category";
 
 			var media = await GetData ();
 
-			var array = new NSMutableArray ();
-
 			var results = media
 				.GroupBy (m=> m.Genre, 
-				          (key, g) => new {Genre = key, Media = g.ToList ()});
+			           (key, g) => new NetflixData { Category = key, Media = g.ToList ().ToArray() })
+					.ToArray ();
 
-			foreach(var item in results)
-			{
-				array.Add (new NetflixData { Category = item.Genre, Media = item.Media.ToArray() });
-			}
-
-			var realData = NSArray.FromArray<NSObject> (array);
-
-			_ds.Data = realData;
+			_ds.Data = results;
 
 	        _gridView.WeakDataSource = _ds;
 			
@@ -90,29 +81,31 @@ namespace Nuclios.Netflix
 			return true;
 		}
 
+		static NetflixMedia MapNetflixMedia (JsonValue movie)
+		{
+			return new NetflixMedia () {
+				Title = movie ["trackName"],
+				ImageUrl = movie ["artworkUrl100"],
+				Genre = movie ["primaryGenreName"],
+			};
+		}
+
 		async Task<IList<NetflixMedia>> GetData ()
 		{
 			var movies = new List<NetflixMedia> ();
 			var url = "https://itunes.apple.com/search?term={0}&media=movie&entity=movie&limit=600&attribute=releaseYearTerm";
+
 			var client = new HttpClient ();
 
 			var response = await client.GetAsync (string.Format (url, "2013"));
 			var stringData = await response.Content.ReadAsStringAsync ();
 			var json = JsonObject.Parse (stringData);
 
-			Console.WriteLine (stringData);
-
-			var resultCount = json ["resultCount"];
 			var results = json["results"];
-
 
 			foreach(JsonValue movie in results)
 			{
-				movies.Add (new NetflixMedia(){
-					Title = movie["trackName"],
-					ImageUrl = movie["artworkUrl100"],
-					Genre = movie["primaryGenreName"],
-				});
+				movies.Add (MapNetflixMedia (movie));
 
 			}
 			return movies;

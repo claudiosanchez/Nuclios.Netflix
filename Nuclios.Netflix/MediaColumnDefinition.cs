@@ -19,6 +19,8 @@ namespace Nuclios.Netflix
 
 	public class MediaColumnDefinition: IGGridViewColumnDefinition
 	{
+
+		private readonly string CellIdentifier = "MediaCell";
 		public MediaColumnDefinition (string key):base(key)
 		{
 			
@@ -29,10 +31,13 @@ namespace Nuclios.Netflix
 		                                           IGGridViewDataSourceHelper dataSource)
 		{
 			var data = dataSource.ResolveDataObjectForRow (path);
-			MediaCell cell = (gridView.DequeueReusableCell ("MEDIA_CELL")as MediaCell);
 
-			if (cell == null)
-				cell = new MediaCell ("MEDIA_CELL");
+		//	MediaCell cell = (gridView.DequeueReusableCell (CellIdentifier)as MediaCell);
+
+			var cell = (MediaCell) gridView.DequeueReusableCell (CellIdentifier) ?? new MediaCell (CellIdentifier);
+
+			//if (cell == null)
+			//	cell = new MediaCell ("MEDIA_CELL");
 
 			cell.Data = data as NetflixData;
 

@@ -2,18 +2,31 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPad.6.1" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Nuclios.Netflix/Nuclios_NetflixViewController.cs">
     <Files>
-      <File FileName="Nuclios.Netflix/Nuclios_NetflixViewController.cs" Line="63" Column="1" />
-      <File FileName="Nuclios.Netflix/MediaCell.cs" Line="31" Column="1" />
-      <File FileName="Nuclios.Netflix/MediaColumnDefinition.cs" Line="29" Column="46" />
-      <File FileName="Nuclios.Netflix/Main.cs" Line="25" Column="1" />
+      <File FileName="Nuclios.Netflix/MediaCell.cs" Line="41" Column="4" />
+      <File FileName="Nuclios.Netflix/Nuclios_NetflixViewController.cs" Line="53" Column="45" />
+      <File FileName="Nuclios.Netflix/Nuclios_NetflixViewController.designer.cs" Line="18" Column="1" />
+      <File FileName="Nuclios.Netflix/MediaColumnDefinition.cs" Line="31" Column="84" />
+      <File FileName="Nuclios.Netflix/Main.cs" Line="18" Column="26" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Nuclios.Netflix" expanded="True">
+            <Node name="Nuclios_NetflixViewController.cs" expanded="True" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/Claudio/Nuclios.Netflix/Nuclios.Netflix/MediaCell.cs" line="67" column="1" />
       <Breakpoint file="/Users/Claudio/Nuclios.Netflix/Nuclios.Netflix/Nuclios_NetflixViewController.cs" line="63" column="33" />
       <Breakpoint file="/Users/Claudio/Nuclios.Netflix/Nuclios.Netflix/MediaCell.cs" line="58" column="1" />
+      <Breakpoint hitAction="PrintExpression" traceExpression="{results}" file="/Users/Claudio/Projects/Nuclios.Netflix/Nuclios.Netflix/Nuclios_NetflixViewController.cs" line="66" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="Nuclios.Netflix/Nuclios_NetflixViewController.cs" line="68" offsetX="536" offsetY="1173" expression="results" liveUpdate="True" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
 </Properties>
