@@ -17,97 +17,92 @@ using System.Net.Http;
 using System.Json;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using Nuclios.Netflix.Model;
 
 namespace Nuclios.Netflix
 {
-		public partial class Nuclios_NetflixViewController : UIViewController
-	{
-		IGGridView _gridView;
-		IGGridViewDataSourceHelper _ds;
+    public partial class Nuclios_NetflixViewController : UIViewController
+    {
+        private IGGridView _gridView;
+        private IGGridViewDataSourceHelper _ds;
 
-		public Nuclios_NetflixViewController () : base ("Nuclios_NetflixViewController", null)
-		{
-		}
+        public Nuclios_NetflixViewController() : base("Nuclios_NetflixViewController", null)
+        {
+        }
 
-		public override void DidReceiveMemoryWarning ()
-		{
-			// Releases the view if it doesn't have a superview.
-			base.DidReceiveMemoryWarning ();
-			
-			// Release any cached data, images, etc that aren't in use.
-		}
-	
-		public override async void ViewDidLoad ()
-		{
-			base.ViewDidLoad ();
-			var rect = new RectangleF (0, 0, View.Frame.Size.Width, View.Frame.Size.Height);
+        public override void DidReceiveMemoryWarning()
+        {
+            // Releases the view if it doesn't have a superview.
+            base.DidReceiveMemoryWarning();
 
-			_gridView = new IGGridView (rect, IGGridViewStyle.IGGridViewStyleDefault);
+            // Release any cached data, images, etc that aren't in use.
+        }
 
-			_gridView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth;
+        public override void ViewDidLoad()
+        {
+            base.ViewDidLoad();
+            var rect = new RectangleF(0, 0, View.Frame.Size.Width, View.Frame.Size.Height);
 
-			View.AddSubview (_gridView);
+            _gridView = new IGGridView(rect, IGGridViewStyle.IGGridViewStyleDefault);
 
-			_gridView.RowHeight = 200;
-			_gridView.HeaderHeight = 0;
-			_gridView.BackgroundColor = UIColor.Black;
+            _gridView.AutoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth;
 
-			_ds = new IGGridViewDataSourceHelper ();
-			_ds.AutoGenerateColumns = false;
+            View.AddSubview(_gridView);
 
-			var column = new MediaColumnDefinition("Media");
+            _gridView.RowHeight = 200;
+            _gridView.HeaderHeight = 0;
+            _gridView.BackgroundColor = UIColor.Black;
 
-			_ds.ColumnDefinitions.Add (column);
+            _ds = new IGGridViewDataSourceHelper();
+            _ds.AutoGenerateColumns = false;
 
-			//_ds.GroupingKey = "Category";
+            var column = new MediaColumnDefinition("Media");
 
-			var media = await GetData ();
+            _ds.ColumnDefinitions.Add(column);
 
-			var results = media
-				.GroupBy (m=> m.Genre, 
-			           (key, g) => new NetflixData { Category = key, Media = g.ToList ().ToArray() })
-					.ToArray ();
+            //_ds.GroupingKey = "Category";
 
-			_ds.Data = results;
+            var media = GetData();
+            
+            var results = media.ToList()
+                              .GroupBy(m => m.Genre,
+                                       (key, g) => new NetflixData {Category = key, Media = g.ToArray()})
+                              .ToArray();
 
-	        _gridView.WeakDataSource = _ds;
-			
-			// Perform any additional setup after loading the view, typically from a nib.
-		}
+            _ds.Data = results;
 
-		public override bool ShouldAutorotateToInterfaceOrientation (UIInterfaceOrientation toInterfaceOrientation)
-		{
-			// Return true for supported orientations
-			return true;
-		}
+            _gridView.WeakDataSource = _ds;
+     
+    }
 
-		static NetflixMedia MapNetflixMedia (JsonValue movie)
+
+		NetflixMedia MapNetflixMedia (iTunesMovie movie)
 		{
 			return new NetflixMedia () {
-				Title = movie ["trackName"],
-				ImageUrl = movie ["artworkUrl100"],
-				Genre = movie ["primaryGenreName"],
+				Title =  movie.trackName,
+				ImageUrl = movie.artworkUrl100,
+				Genre = movie.primaryGenreName,
 			};
 		}
 
-		async Task<IList<NetflixMedia>> GetData ()
+		IList<NetflixMedia> GetData ()
 		{
 			var movies = new List<NetflixMedia> ();
 			var url = "https://itunes.apple.com/search?term={0}&media=movie&entity=movie&limit=600&attribute=releaseYearTerm";
 
 			var client = new HttpClient ();
 
-			var response = await client.GetAsync (string.Format (url, "2013"));
-			var stringData = await response.Content.ReadAsStringAsync ();
-			var json = JsonObject.Parse (stringData);
+		    var response = client.GetAsync(string.Format(url, "2013"));
 
-			var results = json["results"];
+		    response.ContinueWith(x =>
+		        {
+		            string stringData = response.Result.Content.ReadAsStringAsync().Result;
+		            var json = JsonConvert.DeserializeObject<RootObject>(stringData);
 
-			foreach(JsonValue movie in results)
-			{
-				movies.Add (MapNetflixMedia (movie));
+                    json.results.ForEach(m=> MapNetflixMedia(m));
+		        });
 
-			}
 			return movies;
 		}
 

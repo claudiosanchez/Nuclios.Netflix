@@ -5,18 +5,24 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuclios.Netflix", "Nuclios.
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|iPhoneSimulator = Debug|iPhoneSimulator
-		Release|iPhoneSimulator = Release|iPhoneSimulator
-		Debug|iPhone = Debug|iPhone
-		Release|iPhone = Release|iPhone
 		Ad-Hoc|iPhone = Ad-Hoc|iPhone
+		Ad-Hoc|iPhoneSimulator = Ad-Hoc|iPhoneSimulator
 		AppStore|iPhone = AppStore|iPhone
+		AppStore|iPhoneSimulator = AppStore|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhone = Release|iPhone
+		Release|iPhoneSimulator = Release|iPhoneSimulator
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{57289F02-531A-4015-9CD0-CE6A28B24C4F}.Ad-Hoc|iPhone.ActiveCfg = Ad-Hoc|iPhone
 		{57289F02-531A-4015-9CD0-CE6A28B24C4F}.Ad-Hoc|iPhone.Build.0 = Ad-Hoc|iPhone
+		{57289F02-531A-4015-9CD0-CE6A28B24C4F}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Ad-Hoc|iPhoneSimulator
+		{57289F02-531A-4015-9CD0-CE6A28B24C4F}.Ad-Hoc|iPhoneSimulator.Build.0 = Ad-Hoc|iPhoneSimulator
 		{57289F02-531A-4015-9CD0-CE6A28B24C4F}.AppStore|iPhone.ActiveCfg = AppStore|iPhone
 		{57289F02-531A-4015-9CD0-CE6A28B24C4F}.AppStore|iPhone.Build.0 = AppStore|iPhone
+		{57289F02-531A-4015-9CD0-CE6A28B24C4F}.AppStore|iPhoneSimulator.ActiveCfg = AppStore|iPhoneSimulator
+		{57289F02-531A-4015-9CD0-CE6A28B24C4F}.AppStore|iPhoneSimulator.Build.0 = AppStore|iPhoneSimulator
 		{57289F02-531A-4015-9CD0-CE6A28B24C4F}.Debug|iPhone.ActiveCfg = Debug|iPhone
 		{57289F02-531A-4015-9CD0-CE6A28B24C4F}.Debug|iPhone.Build.0 = Debug|iPhone
 		{57289F02-531A-4015-9CD0-CE6A28B24C4F}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
@@ -25,6 +31,9 @@ Global
 		{57289F02-531A-4015-9CD0-CE6A28B24C4F}.Release|iPhone.Build.0 = Release|iPhone
 		{57289F02-531A-4015-9CD0-CE6A28B24C4F}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{57289F02-531A-4015-9CD0-CE6A28B24C4F}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Nuclios.Netflix\Nuclios.Netflix.csproj

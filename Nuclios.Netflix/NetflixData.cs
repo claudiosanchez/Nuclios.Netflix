@@ -16,18 +16,14 @@ using Infragistics;
 
 namespace Nuclios.Netflix
 {
-
+    [Register("NetflixData")]
 	public class NetflixData: NSObject
 	{
-		public NetflixData ()
-		{
-		}
-
-		[Export("Category")]
+	    [Export("Category")]
 		public string Category { get; set; }
 
 		[Export("Media")]
-		public NSObject[] Media { get; set;}
+		public NetflixMedia[] Media { get; set;}
 
 		public float ScrollPosition;
 	}

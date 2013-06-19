@@ -64,7 +64,7 @@ namespace Nuclios.Netflix
 		public override void CellDetached ()
 		{
 			Data.ScrollPosition = _gridView.ContentOffset.X;
-<<<<<<< HEAD
+
 			try 
 			{
 				_ds.Data = null;
@@ -78,7 +78,6 @@ namespace Nuclios.Netflix
 				System.Diagnostics.Debug.WriteLine (ex.Message);
 			}
 
-=======
 
 			// TODO: Can't set Data to Null. 
 			_ds.Data = new NSObject[] { };
@@ -87,7 +86,7 @@ namespace Nuclios.Netflix
 			_gridView.UpdateData ();
 
 			Data = null;
->>>>>>> Stash
+
 		}
 
 		public override void SetupSize (SizeF size)
