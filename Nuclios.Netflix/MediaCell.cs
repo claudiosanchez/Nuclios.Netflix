@@ -31,7 +31,7 @@ namespace Nuclios.Netflix
 		{
 			_gridView = new IGGridView ();
 			_gridView.AllowHorizontalBounce = true;
-			_gridView.AlwaysBounceVertical = false; 
+			_gridView.AlwaysBounceVertical = false;
 			_gridView.AlwaysBounceHorizontal = true;
 			_gridView.HeaderHeight = 0;
 			_gridView.RowSeparatorHeight = 0;
@@ -40,12 +40,10 @@ namespace Nuclios.Netflix
 
 			AddSubview (_gridView);
 
-			var col = new IGGridViewImageColumnDefinition ("ImageUrl", 
-			                                               IGGridViewImageColumnDefinitionPropertyType
-			                                               .IGGridViewImageColumnDefinitionPropertyTypeStringUrl);
+			var col = new IGGridViewImageColumnDefinition ("ImageUrl", IGGridViewImageColumnDefinitionPropertyType.IGGridViewImageColumnDefinitionPropertyTypeStringUrl);
 			col.CacheImages = true;
-			_ds = new IGGridViewSingleRowSingleFieldDataSourceHelper (col);
 
+			_ds = new IGGridViewSingleRowSingleFieldDataSourceHelper (col);
 			_gridView.WeakDataSource = _ds;
 		}
 
@@ -66,6 +64,7 @@ namespace Nuclios.Netflix
 		public override void CellDetached ()
 		{
 			Data.ScrollPosition = _gridView.ContentOffset.X;
+<<<<<<< HEAD
 			try 
 			{
 				_ds.Data = null;
@@ -79,6 +78,16 @@ namespace Nuclios.Netflix
 				System.Diagnostics.Debug.WriteLine (ex.Message);
 			}
 
+=======
+
+			// TODO: Can't set Data to Null. 
+			_ds.Data = new NSObject[] { };
+
+			_ds.InvalidateData ();
+			_gridView.UpdateData ();
+
+			Data = null;
+>>>>>>> Stash
 		}
 
 		public override void SetupSize (SizeF size)

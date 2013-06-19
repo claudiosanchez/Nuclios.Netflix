@@ -8,9 +8,7 @@ While checking out my usual late afternoon reading stream (using Flipboard), I f
 > 
 > Take advantage of a powerful API that is familiar to all iOS developers. You can use NucliOS controls in native iOS projects built with Objective C and Xcode. You can even build in C#; with Xamarin.ioS support, NucliOS includes final MonoTouch bindings for all of our iOS controls. 
 
-And so the journey begins. Steve has done a great job of explaining in detail the implementation, so I won't bore you with the details. Instead, I will show you how easy it is to create a very appealing UI by "maximizing the amount of work **not done**". 
-
-I will highlight what things to keep in mind when "translating" code developed with XCode and Obj-C to the *stuff dreams are made of* (C# and Xamarin.iOS). 
+And so the journey begins. Steve has done a great job of explaining in detail the implementation, so I won't bore you with the details. Instead I will highlight what things to keep in mind when "translating" code developed with XCode and Obj-C to the stuff dreams are made of (C# and Xamarin.iOS). 
     
     // Obj-C Implementation of the model 
     
@@ -68,9 +66,9 @@ Instead of..
 
 4- This is not a required thing, but If you find something that just doesn't make sense to "translate" and you can make it better, then do it.  That's the case of the code used to consume iTunes Web services. I wasn't going to simply translate line by line. 
 
-    //Obj-C
-    +(NSMutableArray*)generateData
-    {
+//Obj-C
++(NSMutableArray*)generateData
+{
     NSMutableDictionary* mediaLookup = [[NSMutableDictionary alloc]init];
     NSMutableArray* netFlixData = [[NSMutableArray alloc]init];
     
@@ -119,11 +117,11 @@ Instead of..
     
     
 
----------------------------
 
 
-    //C#
-    async Task<IList<NetflixMedia>> GetData ()
+//C#
+
+async Task<IList<NetflixMedia>> GetData ()
 		{
 			var movies = new List<NetflixMedia> ();
 			var url = "https://itunes.apple.com/search?term={0}&media=movie&entity=movie&limit=600&attribute=releaseYearTerm";
@@ -149,11 +147,6 @@ Instead of..
 		}
 
 
-
-
-
-
-## The End Result
 ![GridView](Screenshots/6332.IMG_0250.PNG)
 
 ## Netflix UI on iPad ##

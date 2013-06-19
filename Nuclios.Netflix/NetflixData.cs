@@ -19,6 +19,10 @@ namespace Nuclios.Netflix
 
 	public class NetflixData: NSObject
 	{
+		public NetflixData ()
+		{
+		}
+
 		[Export("Category")]
 		public string Category { get; set; }
 

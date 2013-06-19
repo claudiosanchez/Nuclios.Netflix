@@ -16,7 +16,7 @@ using Infragistics;
 
 namespace Nuclios.Netflix
 {
-	public class NetflixMedia: NSObject
+	public class NetflixMedia: NSObject, IDisposable	
 	{
 		[Export("ImageUrl")]
 		public string ImageUrl {
