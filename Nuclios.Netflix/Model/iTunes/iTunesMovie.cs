@@ -1,4 +1,6 @@
-﻿namespace Nuclios.Netflix.Model
+﻿using System.Collections.Generic;
+
+namespace Nuclios.Netflix.Model.iTunes
 {
     public class iTunesMovie
     {
@@ -23,8 +25,9 @@
         public string currency { get; set; }
         public string primaryGenreName { get; set; }
         public string contentAdvisoryRating { get; set; }
-        public string shortDescription { get; set; }
         public string longDescription { get; set; }
+        public string radioStationUrl { get; set; }
+        public string shortDescription { get; set; }
         public int? collectionId { get; set; }
         public string collectionName { get; set; }
         public string collectionCensoredName { get; set; }
@@ -35,5 +38,11 @@
         public int? trackNumber { get; set; }
         public int? artistId { get; set; }
         public string artistViewUrl { get; set; }
+    }
+
+    public class RootObject
+    {
+        public int resultCount { get; set; }
+        public List<iTunesMovie> results { get; set; }
     }
 }
